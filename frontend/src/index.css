@@ -1,0 +1,441 @@
+/* =============================================================
+   src/index.css
+   Purpose: Global reset, light/dark theme, scrollbar,
+   invoice print, customer ledger print.
+============================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root,
+:root[data-theme="light"] {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-high: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --text-sub: #334155;
+  --text-muted: #64748b;
+  --border: #d9e2ec;
+  --accent: #c9a227;
+  --accent-hover: #a67c00;
+  --accent-glow: rgba(201, 162, 39, 0.14);
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #d97706;
+  --info: #2563eb;
+  --purple: #7c3aed;
+  --shadow: 0 24px 58px rgba(15, 23, 42, 0.10);
+  --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.065);
+}
+
+:root[data-theme="dark"] {
+  --bg: #08111f;
+  --surface: #101b2d;
+  --surface-high: #172338;
+  --card: #101b2d;
+  --text: #f8fafc;
+  --text-sub: #dbeafe;
+  --text-muted: #94a3b8;
+  --border: #29384f;
+  --accent: #d6b447;
+  --accent-hover: #c9a227;
+  --accent-glow: rgba(214, 180, 71, 0.18);
+  --success: #22c55e;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --info: #60a5fa;
+  --purple: #a78bfa;
+  --shadow: 0 24px 64px rgba(0, 0, 0, 0.42);
+  --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.30);
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.45;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button,
+select,
+input,
+textarea {
+  font-family: inherit;
+  font: inherit;
+}
+
+button {
+  user-select: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+::selection {
+  background: var(--accent-glow);
+  color: var(--text);
+}
+
+/* =============================================================
+   Scrollbar
+============================================================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =============================================================
+   PRINT BASE
+   Important:
+   Only one print system.
+   Invoice and Ledger handled separately.
+============================================================= */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 8mm;
+  }
+
+  html,
+  body {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    overflow: visible !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .no-print,
+  .no-print *,
+  button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+/* =============================================================
+   INVOICE PRINT
+============================================================= */
+
+@media print {
+  #invoice-print-area,
+  #invoice-print-area * {
+    visibility: visible !important;
+  }
+
+  #invoice-print-area {
+    position: absolute !important;
+    left: 50% !important;
+    top: 0 !important;
+    transform: translateX(-50%) !important;
+
+    width: 180mm !important;
+    max-width: 180mm !important;
+
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border: 1.5px solid #000000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    overflow: visible !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  #invoice-print-area div,
+  #invoice-print-area span,
+  #invoice-print-area p,
+  #invoice-print-area td,
+  #invoice-print-area th,
+  #invoice-print-area h1,
+  #invoice-print-area h2,
+  #invoice-print-area h3 {
+    color: #000000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  #invoice-print-area > div:first-child {
+    background: #ffffff !important;
+    border-bottom: 2px solid #000000 !important;
+    padding: 12px 16px !important;
+  }
+
+  #invoice-print-area > div:nth-child(2) {
+    background: #ffffff !important;
+    padding: 12px 16px 14px !important;
+  }
+
+  #invoice-print-area table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+    margin-top: 10px !important;
+    margin-bottom: 12px !important;
+    font-size: 11px !important;
+  }
+
+  #invoice-print-area table th,
+  #invoice-print-area table td {
+    border: 1px solid #000000 !important;
+    color: #000000 !important;
+    padding: 5px 6px !important;
+    background: #ffffff !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+
+  #invoice-print-area table th {
+    background: #f2f2f2 !important;
+    font-weight: 800 !important;
+  }
+
+  #invoice-print-area > div:nth-child(2) > div:nth-last-child(2) {
+    width: 48% !important;
+    margin-left: auto !important;
+    margin-top: 10px !important;
+
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border: 1px solid #000000 !important;
+    border-radius: 0 !important;
+    padding: 7px 9px !important;
+  }
+
+  #invoice-print-area > div:nth-child(2) > div:nth-last-child(2) > div {
+    border-bottom: 1px solid #999999 !important;
+    padding: 5px 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  #invoice-print-area > div:nth-child(2) > div:nth-last-child(2) > div:last-child {
+    border-bottom: none !important;
+  }
+}
+
+/* =============================================================
+   CUSTOMER LEDGER PRINT - FINAL FIX
+   No horizontal scroll. Tables fit inside A4.
+============================================================= */
+
+@media print {
+  #ledger-print-area,
+  #ledger-print-area * {
+    visibility: visible !important;
+  }
+
+  #ledger-print-area {
+    position: absolute !important;
+    left: 50% !important;
+    top: 0 !important;
+    transform: translateX(-50%) !important;
+
+    width: 180mm !important;
+    max-width: 180mm !important;
+    min-height: auto !important;
+
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border: 1.5px solid #000000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    padding: 8mm !important;
+    margin: 0 !important;
+
+    overflow: visible !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  #ledger-print-area div,
+  #ledger-print-area span,
+  #ledger-print-area p,
+  #ledger-print-area h1,
+  #ledger-print-area h2,
+  #ledger-print-area h3,
+  #ledger-print-area td,
+  #ledger-print-area th {
+    color: #000000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  #ledger-print-area h1,
+  #ledger-print-area h2 {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+  }
+
+  #ledger-print-area h3 {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+  }
+
+  #ledger-print-area > div,
+  #ledger-print-area section,
+  #ledger-print-area article {
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* Force summary cards to fit */
+  #ledger-print-area [style*="grid-template-columns"],
+  #ledger-print-area [style*="gridTemplateColumns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  /* Remove all scroll containers inside ledger */
+  #ledger-print-area [style*="overflow"],
+  #ledger-print-area [style*="overflow-x"],
+  #ledger-print-area [style*="overflowX"],
+  #ledger-print-area [style*="auto"],
+  #ledger-print-area [style*="scroll"] {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  /* Tables */
+  #ledger-print-area table {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+
+    font-size: 8.5px !important;
+    line-height: 1.2 !important;
+
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  #ledger-print-area thead,
+  #ledger-print-area tbody,
+  #ledger-print-area tr {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #ledger-print-area th,
+  #ledger-print-area td {
+    border: 1px solid #000000 !important;
+    padding: 4px 3px !important;
+
+    color: #000000 !important;
+    background: #ffffff !important;
+
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  #ledger-print-area th {
+    background: #f2f2f2 !important;
+    font-weight: 800 !important;
+  }
+
+  /* Better column widths for invoice history */
+  #ledger-print-area table th:nth-child(1),
+  #ledger-print-area table td:nth-child(1) {
+    width: 11% !important;
+  }
+
+  #ledger-print-area table th:nth-child(2),
+  #ledger-print-area table td:nth-child(2) {
+    width: 16% !important;
+  }
+
+  #ledger-print-area table th:nth-child(3),
+  #ledger-print-area table td:nth-child(3) {
+    width: 14% !important;
+  }
+
+  #ledger-print-area table th:nth-child(4),
+  #ledger-print-area table td:nth-child(4),
+  #ledger-print-area table th:nth-child(5),
+  #ledger-print-area table td:nth-child(5),
+  #ledger-print-area table th:nth-child(6),
+  #ledger-print-area table td:nth-child(6) {
+    width: 15% !important;
+    text-align: right !important;
+  }
+
+  #ledger-print-area table th:nth-child(7),
+  #ledger-print-area table td:nth-child(7) {
+    width: 14% !important;
+  }
+
+  /* Cards/boxes clean print */
+  #ledger-print-area [style*="borderRadius"],
+  #ledger-print-area [style*="border-radius"] {
+    border-radius: 4px !important;
+  }
+
+  #ledger-print-area [style*="boxShadow"],
+  #ledger-print-area [style*="box-shadow"] {
+    box-shadow: none !important;
+  }
+}
