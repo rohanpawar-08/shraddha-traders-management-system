@@ -60,3 +60,22 @@ shraddha-traders-app/
 │   └── package.json
 │
 └── README.md
+## Screenshots
+
+### Dashboard
+![Dashboard](screenshots/dashboard.jpeg)
+
+### Products
+![Products](screenshots/products.jpeg)
+
+### Billing
+![Billing](screenshots/billing.jpeg)
+
+### Bill Invoice
+![Bill Invoice](screenshots/billinvoice.jpeg)
+
+### Customer Account
+![Customer Account](screenshots/customeraccount.jpeg)
+
+### Reports
+![Reports](screenshots/reports.jpeg)
